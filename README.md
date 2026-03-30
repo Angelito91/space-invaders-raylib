@@ -74,7 +74,7 @@ space-invaders-raylib/
 
 Este proyecto es el resultado del trabajo colaborativo de:
 - **Líder Técnico:** [Tu Nombre] - Arquitectura y Core.
-- **Dev 2:** [Nombre] - Gameplay y Sistema de Disparos.
+- **Dev 2:** [Sasuke44LQ] - Gameplay y Sistema de Disparos.
 - **Dev 3:** [Nombre] - IA de Enemigos y Movimiento de Grupo.
 - **Dev 4:** [Nombre] - UI, Sonido y Persistencia.
 
