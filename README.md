@@ -84,7 +84,3 @@ Para mantener la integridad del código, seguimos estas reglas:
 1. **Ramas:** No trabajamos directamente en `main`. Creamos ramas `feature/nombre-de-tarea`.
 2. **Commits:** Mensajes claros y descriptivos.
 3. **Doxygen:** Es obligatorio documentar cada nueva función en el `.h` antes de hacer el *Pull Request*.
-
-4.  **Flujo de Trabajo:** Añadí la sección de **Contribución**. Esto sirve como "contrato" para tu equipo para que nadie rompa la rama principal.
-
-**Siguiente paso:** ¿Te gustaría que te genere el archivo **`Doxyfile`** base para que la sección de documentación del README funcione de inmediato?
