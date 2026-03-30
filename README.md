@@ -1,156 +1,90 @@
 # Space Invaders Raylib
 
-Un clon del clásico arcade **Space Invaders** desarrollado en **C++** con [raylib](https://www.raylib.com/).
+Un clon profesional del clásico arcade **Space Invaders** desarrollado en **C++17** utilizando la biblioteca [raylib](https://www.raylib.com/). Este proyecto ha sido diseñado con un enfoque modular y orientado a objetos, ideal para el aprendizaje de desarrollo de videojuegos y sistemas de software.
 
 ## ✨ Características
 
-- 🎮 Jugabilidad clásica del arcade Space Invaders
-- 🎨 Gráficos 2D modernos con raylib
-- 🔧 Código limpio y modular en C++17
-- 📦 Gestión de dependencias con vcpkg
-- 🛠️ Compilación con CMake multiplataforma
+- 🎮 **Jugabilidad Clásica:** Movimiento fluido, oleadas de enemigos y sistema de disparos.
+- 🏆 **Persistencia:** Sistema de *High Score* local para guardar récords.
+- 🎨 **Arquitectura Modular:** Separación clara entre lógica de juego, entidades y renderizado.
+- 📖 **Documentación Automática:** Comentarios en formato Doxygen para generación de manuales técnicos.
+- 🛠️ **Build System:** Configuración robusta con CMake y gestión de dependencias con vcpkg.
 
 ## 📋 Requisitos Previos
 
-**General:**
-- CMake 3.10+
-- Compilador C++17 (GCC 7+, Clang 5+, MSVC 2017+)
-- Git
-
-**Específico por sistema:**
-- **Windows:** Visual Studio 2019+ o MinGW
-- **Linux:** build-essential
-- **macOS:** Xcode Command Line Tools
+### **Dependencias del Sistema**
+* **Arch Linux:** `sudo pacman -S raylib cmake doxygen`
+* **Ubuntu/Debian:** `sudo apt install libraylib-dev doxygen`
+* **Windows:** Visual Studio 2022 + [vcpkg](https://github.com/Microsoft/vcpkg)
 
 ## 🚀 Instalación y Compilación
 
-### 1. Instalar vcpkg
-
-**Windows:**
-```cmd
-git clone https://github.com/Microsoft/vcpkg.git C:\vcpkg
-cd C:\vcpkg
-.\bootstrap-vcpkg.bat
-```
-
-**Linux/macOS:**
-```bash
-git clone https://github.com/Microsoft/vcpkg.git ~/vcpkg
-cd ~/vcpkg
-./bootstrap-vcpkg.sh
-```
-
-### 2. Clonar el repositorio
-
+### 1. Clonar el repositorio
 ```bash
 git clone <URL-del-repositorio>
 cd space-invaders-raylib
 ```
 
-### 3. Instalar raylib
+### 2. Compilar con CMake
+Recomendamos usar el flujo estándar de CMake:
 
-**Windows:**
-```cmd
-C:\vcpkg\vcpkg install raylib:x64-windows
-```
-
-**Linux:**
 ```bash
-~/vcpkg/vcpkg install raylib:x64-linux
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+cmake --build build
 ```
+*Nota: Si usas **vcpkg**, recuerda añadir `-DCMAKE_TOOLCHAIN_FILE=[ruta-a-vcpkg]/scripts/buildsystems/cmake/vcpkg.cmake` al primer comando.*
 
-**macOS:**
-```bash
-~/vcpkg/vcpkg install raylib:arm64-osx
-# O para Intel: ~/vcpkg/vcpkg install raylib:x64-osx
-```
+## 📖 Documentación (Doxygen)
 
-### 4. Compilar
+Este proyecto utiliza **Doxygen** para generar documentación técnica a partir de los comentarios en los archivos de cabecera (`.h`).
 
-**Windows:**
-```cmd
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\cmake\vcpkg.cmake -G "Visual Studio 17 2022"
-cmake --build build --config Release
-```
-
-**Linux/macOS:**
-```bash
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=~/vcpkg/scripts/buildsystems/cmake/vcpkg.cmake
-cmake --build build --config Release
-```
-
-## ▶️ Ejecución
-
-**Windows:**
-```cmd
-.\build\Release\space-invaders.exe
-```
-
-**Linux/macOS:**
-```bash
-./build/space-invaders
-```
+Para generar la documentación en formato HTML:
+1. Asegúrate de tener Doxygen instalado.
+2. Ejecuta en la raíz del proyecto:
+   ```bash
+   doxygen Doxyfile
+   ```
+3. Abre `docs/html/index.html` en tu navegador.
 
 ## 🎮 Controles
 
 | Tecla | Acción |
 |-------|--------|
-| **← →** | Mover nave |
+| **A / D** o **← →** | Mover nave lateralmente |
 | **Espacio** | Disparar |
-| **ESC** | Salir |
+| **P** | Pausar juego |
+| **ESC** | Salir al menú / Cerrar |
 
 ## 📁 Estructura del Proyecto
 
-```
+```text
 space-invaders-raylib/
-├── src/main.cpp           # Código fuente principal
-├── assets/                # Recursos (texturas, sonidos)
-├── build/                 # Directorio de compilación
-├── CMakeLists.txt         # Configuración de compilación
-├── vcpkg.json            # Manifiesto de dependencias
-└── README.md             # Este archivo
+├── assets/              # Texturas, sonidos y fuentes
+├── docs/                # Documentación generada por Doxygen
+├── include/             # Archivos de cabecera (.h)
+│   ├── core/            # Engine y Game Loop
+│   └── entities/        # Definiciones de Player, Alien, etc.
+├── src/                 # Implementación (.cpp)
+├── CMakeLists.txt       # Configuración de CMake
+├── Doxyfile             # Configuración de Doxygen
+└── README.md            # Este archivo
 ```
 
-## 📦 Dependencias
+## 👥 Equipo de Desarrollo
 
-- **raylib 5.0+** - Librería gráfica 2D y manejo de entrada (gestionada automáticamente con vcpkg)
+Este proyecto es el resultado del trabajo colaborativo de:
+- **Líder Técnico:** [Tu Nombre] - Arquitectura y Core.
+- **Dev 2:** [Nombre] - Gameplay y Sistema de Disparos.
+- **Dev 3:** [Nombre] - IA de Enemigos y Movimiento de Grupo.
+- **Dev 4:** [Nombre] - UI, Sonido y Persistencia.
 
-## 🐛 Solución de Problemas
+## 🤝 Contribución (Git Workflow)
 
-**CMake no encuentra Visual Studio (Windows):**
-```cmd
-cmake -B build -S . -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\cmake\vcpkg.cmake
-```
+Para mantener la integridad del código, seguimos estas reglas:
+1. **Ramas:** No trabajamos directamente en `main`. Creamos ramas `feature/nombre-de-tarea`.
+2. **Commits:** Mensajes claros y descriptivos.
+3. **Doxygen:** Es obligatorio documentar cada nueva función en el `.h` antes de hacer el *Pull Request*.
 
-**CMake no encuentra raylib:**
-- Verifica que vcpkg está en la ruta correcta
-- Asegúrate de haber instalado raylib: `vcpkg install raylib:<arquitectura>`
-- Usa la ruta completa del archivo toolchain
+4.  **Flujo de Trabajo:** Añadí la sección de **Contribución**. Esto sirve como "contrato" para tu equipo para que nadie rompa la rama principal.
 
-**Limpiar y recompilar todo:**
-```bash
-rm -rf build           # Linux/macOS
-# rmdir /s build       # Windows
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=<ruta-vcpkg>
-cmake --build build --config Release
-```
-
-**Linux - Dependencias gráficas faltantes:**
-```bash
-sudo apt-get install libgl1-mesa-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev
-```
-
-## 📚 Recursos Útiles
-
-- [Documentación raylib](https://www.raylib.com/)
-- [Referencia API raylib](https://www.raylib.com/cheatsheet/cheatsheet.html)
-- [CMake Documentation](https://cmake.org/documentation/)
-- [vcpkg Quick Start](https://github.com/Microsoft/vcpkg#quick-start)
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia especificada en el archivo [LICENSE](LICENSE).
-
----
-
-**¡Disfruta el juego! 🚀**
+**Siguiente paso:** ¿Te gustaría que te genere el archivo **`Doxyfile`** base para que la sección de documentación del README funcione de inmediato?
