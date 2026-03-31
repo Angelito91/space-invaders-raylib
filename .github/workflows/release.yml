@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*' # Se ejecuta al crear un tag que empiece con "v", por ejemplo "v1.0.0"
+      - "v*" # Se ejecuta al crear un tag que empiece con "v", por ejemplo "v1.0.0"
 
 jobs:
   build-and-release:
@@ -42,12 +42,11 @@ jobs:
       - name: Configure CMake
         shell: bash
         run: >
-          cmake -B build -S .
-          -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake -B build
           -DCMAKE_BUILD_TYPE=Release
 
       - name: Build Project
-        run: cmake --build build --config Release
+        run: cmake --build build
 
       - name: Package Release (Linux)
         if: matrix.os == 'ubuntu-latest'
