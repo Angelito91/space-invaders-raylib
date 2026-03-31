@@ -9,12 +9,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Find raylib using vcpkg
 find_package(raylib CONFIG REQUIRED)
 
-#Colect all .cpp files in src/ automatically
+# Colect all .cpp files in src/ automatically
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-#Tell the compiler where to find .h
-target_include_directories(${PROJECT_NAME} include) 
+# Tell the compiler where to find .h
+target_include_directories(${PROJECT_NAME} PRIVATE include include/core include/entities)
 
 # Link raylib to the executable
-target_link_libraries(${PROJECT_NAME} raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

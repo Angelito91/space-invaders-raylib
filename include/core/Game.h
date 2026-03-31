@@ -24,6 +24,8 @@ private:
     bool CheckCollision(const Rectangle &a, const Rectangle &b);
 
 public:
+    Game();
+
     /**
      * @brief Initialize the window and all systems
      */

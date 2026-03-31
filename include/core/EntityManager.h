@@ -1,8 +1,5 @@
-#pragma once 
-#include <map>
-#include <string>
+#pragma once
 #include <vector>
-#include "raylib.h"
 #include "entities/Player.h"
 #include "entities/Alien.h"
 #include "entities/BarrierBlock.h"
@@ -20,7 +17,7 @@ private:
 
 public:
     /**
-     * @brief Updates all active entities 
+     * @brief Updates all active entities
      */
     void Update();
 
