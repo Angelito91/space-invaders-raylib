@@ -1,6 +1,9 @@
 #include <raylib.h>
+#include <raymath.h>  // <--- Agrega esta para Clamp
 #include <vector>
 #include <cstdlib>
+#include <cmath>
+#include <algorithm>
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -139,6 +142,7 @@ int main() {
                     }
                 }
 
+
                 for (auto &e : enemies) {
                     if (!e.alive) continue;
                     e.pos.x += enemySpeed * dt * enemyDirection;
@@ -230,16 +234,16 @@ int main() {
                 DrawCircle(b.pos.x, b.pos.y, 4, b.enemy ? ORANGE : GREEN);
             }
 
-            DrawText(FormatText("Score: %04d", score), 10, 10, 20, WHITE);
-            DrawText(FormatText("Lives: %d", lives), 10, 34, 20, WHITE);
-            DrawText(FormatText("Enemies: %d", std::count_if(enemies.begin(), enemies.end(), [](const Enemy &e){return e.alive;})), 10, 58, 20, WHITE);
+            DrawText(TextFormat("Score: %04d", score), 10, 10, 20, WHITE);
+            DrawText(TextFormat("Lives: %d", lives), 10, 34, 20, WHITE);
+            DrawText(TextFormat("Enemies: %d", std::count_if(enemies.begin(), enemies.end(), [](const Enemy &e){return e.alive;})), 10, 58, 20, WHITE);
 
             if (IsKeyPressed(KEY_P)) {
                 gameState = GameState::MENU;
             }
         } else if (gameState == GameState::GAMEOVER) {
             DrawText("GAME OVER", 330, 250, 30, RAYWHITE);
-            DrawText(FormatText("SCORE: %d", score), 340, 290, 24, LIGHTGRAY);
+            DrawText(TextFormat("SCORE: %d", score), 340, 290, 24, LIGHTGRAY);
             DrawText("PRESS R TO RESTART", 290, 340, 20, WHITE);
         }
 
@@ -249,4 +253,3 @@ int main() {
     CloseWindow();
     return 0;
 }
-
