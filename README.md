@@ -29,10 +29,28 @@ cd space-invaders-raylib
 Recomendamos usar el flujo estándar de CMake:
 
 ```bash
-cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
+
+Si encuentras problemas de compilación previos, limpia el directorio de build primero:
+```bash
+rm -rf build
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
+
 *Nota: Si usas **vcpkg**, recuerda añadir `-DCMAKE_TOOLCHAIN_FILE=[ruta-a-vcpkg]/scripts/buildsystems/cmake/vcpkg.cmake` al primer comando.*
+
+### 3. Ejecutar el programa
+
+Una vez compilado correctamente, ejecuta el juego:
+
+```bash
+./build/space-invaders
+```
+
+El ejecutable se encontrará en el directorio `build/` después de la compilación.
 
 ## 📖 Documentación (Doxygen)
 
