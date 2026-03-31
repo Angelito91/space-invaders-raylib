@@ -56,4 +56,4 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
 
       - name: Build Project
-        run: cmake --build build --config Release
+        run: cmake --build build
