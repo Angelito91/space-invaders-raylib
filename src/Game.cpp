@@ -1,39 +1,38 @@
 #include "core/Game.h"
 #include <raylib.h>
 
-Game::Game() {
-    ScreenWidth = 800;
-    ScreenHeight = 600;
-    title = "Space Invaders";
+
+
+Game::Game() : screenWidth(DEFAULT_SCREEN_WIDTH), screenHeight(DEFAULT_SCREEN_HEIGHT), title("Space Invaders") {
 }
 
-void Game::Init(){
-    InitWindow(ScreenWidth, ScreenHeight, title.c_str());
-    SetTargetFPS(60);
+void Game::init() {
+    InitWindow(screenWidth, screenHeight, title.c_str());
+    SetTargetFPS(DEFAULT_TARGET_FPS);
 }
 
-void Game::Run(){
+void Game::run() {
     while (!WindowShouldClose()){
-        Update();
+        update();
         BeginDrawing();
-        ClearBackground(BLACK);
-        Draw();
+        ClearBackground(RAYWHITE);
+        draw();
         EndDrawing();
     }
 }
 
-void Game::Update(){
+void Game::update() {
     // Update logic
 }
 
-void Game::Draw(){
+void Game::draw() {
     // Draw logic
 }
 
-void Game::Close(){
+void Game::close() {
     CloseWindow();
 }
 
-bool Game::CheckCollision(const Rectangle &a, const Rectangle &b) {
-    return CheckCollisionRecs(a, b);
+bool Game::checkCollision(const Rectangle &rectA, const Rectangle &rectB) {
+    return CheckCollisionRecs(rectA, rectB);
 }

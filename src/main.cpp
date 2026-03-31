@@ -4,13 +4,13 @@ int main() {
     Game game;
 
     // Initialize game window and systems
-    game.Init();
+    game.init();
 
     // Start the main game loop
-    game.Run();
+    game.run();
 
     // Clean up and close window
-    game.Close();
+    Game::close();
 
     return 0;
 }

@@ -9,8 +9,12 @@
  */
 class Game {
 private:
-    int ScreenWidth,
-        ScreenHeight;
+    static constexpr int DEFAULT_SCREEN_WIDTH = 800;
+    static constexpr int DEFAULT_SCREEN_HEIGHT = 600;
+    static constexpr int DEFAULT_TARGET_FPS = 60;
+
+    int screenWidth,
+        screenHeight;
     std::string title;
     AssetManager assetManager;
     EntityManager entityManager;
@@ -21,7 +25,7 @@ private:
      * @param b Second rectangle
      * @return True if they collide
      */
-    bool CheckCollision(const Rectangle &a, const Rectangle &b);
+    static bool checkCollision(const Rectangle &rectA, const Rectangle &rectB);
 
 public:
     Game();
@@ -29,25 +33,25 @@ public:
     /**
      * @brief Initialize the window and all systems
      */
-    void Init();
+    void init();
 
     /**
      * @brief Stars the main game loop
      */
-    void Run();
+    void run();
 
     /**
      * @brief Updates game logic every frame
      */
-    void Update();
+    void update();
 
     /**
      * @brief Draws everything on screen
      */
-    void Draw();
+    void draw();
 
     /**
      * @brief Closes the window and frees resources
      */
-    void Close();
+    static void close();
 };
