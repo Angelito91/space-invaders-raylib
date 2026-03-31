@@ -6,8 +6,8 @@ int main() {
     SetTargetFPS(60);
 
     // Variables del juego
-    Vector2 playerPos = {400, 300};
-    int playerSize = 20;
+    Vector2 playerPos  = {400, 300};
+    int     playerSize = 20;
 
     // Loop principal
     while (!WindowShouldClose()) {

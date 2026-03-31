@@ -25,6 +25,9 @@ jobs:
       - name: Check Linting with cppcheck
         run: cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem src/
 
+      - name: Check Linting with clang-tidy
+        run: find src -type f -name "*.cpp" -exec clang-tidy {} +
+
   build:
     name: Build Project
     runs-on: ubuntu-latest
