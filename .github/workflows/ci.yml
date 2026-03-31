@@ -1,0 +1,58 @@
+name: CI/CD
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  format-and-lint:
+    name: Format and Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format, clang-tidy, and cppcheck
+        run: sudo apt-get update && sudo apt-get install -y clang-format clang-tidy cppcheck
+
+      - name: Check Formatting
+        run: |
+          echo "Running clang-format check..."
+          # Formats all .cpp and .h files in the src directory, fails if any changes are needed.
+          find src -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format --dry-run --Werror {} +
+
+      - name: Check Linting with cppcheck
+        run: cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem src/
+
+      - name: Check Linting with clang-tidy
+        run: find src -type f -name "*.cpp" -exec clang-tidy {} +
+
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+
+    # Use the default vcpkg installation provided by GitHub Actions runners
+    env:
+      VCPKG_ROOT: /usr/local/share/vcpkg
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Raylib Dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+
+      - name: Setup vcpkg and install dependencies
+        run: |
+          $VCPKG_ROOT/vcpkg integrate install
+          $VCPKG_ROOT/vcpkg install
+
+      - name: Configure CMake
+        run: >
+          cmake -B build
+          -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build Project
+        run: cmake --build build
