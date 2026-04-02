@@ -2,6 +2,7 @@
 #include <raymath.h>  // <--- Agrega esta para Clamp
 #include <vector>
 #include <cstdlib>
+#include <ctime>
 #include <cmath>
 #include <algorithm>
 
@@ -29,8 +30,11 @@ enum class GameState {
 };
 
 int main() {
+    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "space-invaders");
+    InitAudioDevice();
     SetTargetFPS(60);
+    srand((unsigned int)time(NULL));
 
     Vector2 playerPos = {SCREEN_WIDTH/2.0f, SCREEN_HEIGHT - 50.0f};
     const float playerSpeed = 250.0f;
@@ -250,6 +254,7 @@ int main() {
         EndDrawing();
     }
 
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

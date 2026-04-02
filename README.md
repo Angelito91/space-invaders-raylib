@@ -42,6 +42,34 @@ cmake --build build
 
 *Nota: Si usas **vcpkg**, recuerda añadir `-DCMAKE_TOOLCHAIN_FILE=[ruta-a-vcpkg]/scripts/buildsystems/cmake/vcpkg.cmake` al primer comando.*
 
+### Windows con w64devkit + CMake (Recomendado)
+
+Para Windows, recomendamos usar **w64devkit** (64-bit) con raylib precompilado:
+
+1. **Instala w64devkit y raylib:**
+   - Descarga w64devkit desde [https://github.com/skeeto/w64devkit](https://github.com/skeeto/w64devkit)
+   - Instala raylib siguiendo [https://github.com/raysan5/raylib/wiki/Working-on-Windows](https://github.com/raysan5/raylib/wiki/Working-on-Windows)
+   - Asegúrate de que `C:/raylib/w64devkit/x86_64-w64-mingw32/lib/libraylib.a` existe
+
+2. **Compila con CMake:**
+   ```powershell
+   # Configura el PATH para w64devkit
+   $env:PATH = 'C:\raylib\w64devkit\bin;' + $env:PATH
+   
+   # Configura y compila
+   cmake -G "MinGW Makefiles" -B build -DCMAKE_BUILD_TYPE=Release `
+         -DCMAKE_C_COMPILER=C:/raylib/w64devkit/bin/gcc.exe `
+         -DCMAKE_CXX_COMPILER=C:/raylib/w64devkit/bin/g++.exe
+   cmake --build build --config Release
+   ```
+
+3. **Ejecuta:**
+   ```powershell
+   .\build\space-invaders.exe
+   ```
+
+*Nota: El proyecto está configurado para detectar automáticamente w64devkit. Si tienes raylib en rutas diferentes, usa variables de entorno: `RAYLIB_DEVKIT_ROOT`, `RAYLIB_INCLUDE_DIR`, `RAYLIB_LIBRARY`.*
+
 ### 3. Ejecutar el programa
 
 Una vez compilado correctamente, ejecuta el juego:
