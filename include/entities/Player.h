@@ -13,10 +13,10 @@ public:
     /**
      * @brief Updates the player logic every frame
      */
-    virtual void Update() override;
+    virtual void update() override;
     
     /**
      * @brief Draws the ship on screen
      */
-    virtual void Draw() override;
+    virtual void draw() override;
 };

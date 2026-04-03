@@ -19,10 +19,10 @@ public:
     /**
      * @brief Updates all active entities
      */
-    void Update();
+    void update();
 
     /**
      * @brief Draws all active entities
      */
-    void Draw() ;
+    void draw();
 };

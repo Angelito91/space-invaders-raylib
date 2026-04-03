@@ -10,10 +10,10 @@ public:
     /**
      * @brief Updates the alien logic every frame
      */
-    virtual void Update() override;
+    virtual void update() override;
     
     /**
      * @brief Draws the alien on screen
      */
-    virtual void Draw() override;
+    virtual void draw() override;
 };

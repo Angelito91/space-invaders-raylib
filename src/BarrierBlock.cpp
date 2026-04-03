@@ -1,5 +1,5 @@
 #include "BarrierBlock.h"
 
-void BarrierBlock::Update() {}
+void BarrierBlock::update() {}
 
-void BarrierBlock::Draw() {}
+void BarrierBlock::draw() {}

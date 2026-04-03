@@ -23,11 +23,11 @@ void Game::run() {
 }
 
 void Game::update() {
-    // Update logic
+    entityManager.update();
 }
 
 void Game::draw() {
-    // Draw logic
+    entityManager.draw();
 }
 
 void Game::close() {

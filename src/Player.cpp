@@ -1,5 +1,5 @@
 #include "Player.h"
 
-void Player::Update() {}
+void Player::update() {}
 
-void Player::Draw() {}
+void Player::draw() {}

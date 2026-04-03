@@ -10,10 +10,10 @@ public:
     /**
      * @brief Updates the block logic every frame
      */
-    virtual void Update() override;
+    virtual void update() override;
     
     /**
      * @brief Draws the block on screen
      */
-    virtual void Draw() override;
+    virtual void draw() override;
 };

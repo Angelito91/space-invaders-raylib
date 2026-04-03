@@ -10,10 +10,10 @@ public:
     /**
      * @brief Updates the bullet logic every frame
      */
-    virtual void Update() override;
+    virtual void update() override;
     
     /**
      * @brief Draws the bullet on screen
      */
-    virtual void Draw() override;
+    virtual void draw() override;
 };
