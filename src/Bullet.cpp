@@ -1,7 +1,5 @@
 #include "Bullet.h"
 
-void Bullet::Update(){   
-}
+void Bullet::Update() {}
 
-void Bullet::Draw(){
-}
+void Bullet::Draw() {}

@@ -1,7 +1,5 @@
 #include "EntityManager.h"
 
-void EntityManager::Update(){   
-}
+void EntityManager::Update() {}
 
-void EntityManager::Draw(){
-}
+void EntityManager::Draw() {}

@@ -1,10 +1,11 @@
 #include "core/Game.h"
+
 #include <raylib.h>
 
-
-
-Game::Game() : screenWidth(DEFAULT_SCREEN_WIDTH), screenHeight(DEFAULT_SCREEN_HEIGHT), title("Space Invaders") {
-}
+Game::Game()
+    : screenWidth(DEFAULT_SCREEN_WIDTH),
+      screenHeight(DEFAULT_SCREEN_HEIGHT),
+      title("Space Invaders") {}
 
 void Game::init() {
     InitWindow(screenWidth, screenHeight, title.c_str());
@@ -12,7 +13,7 @@ void Game::init() {
 }
 
 void Game::run() {
-    while (!WindowShouldClose()){
+    while (!WindowShouldClose()) {
         update();
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -33,6 +34,6 @@ void Game::close() {
     CloseWindow();
 }
 
-bool Game::checkCollision(const Rectangle &rectA, const Rectangle &rectB) {
+bool Game::checkCollision(const Rectangle& rectA, const Rectangle& rectB) {
     return CheckCollisionRecs(rectA, rectB);
 }

@@ -1,7 +1,5 @@
 #include "Alien.h"
 
-void Alien::Update(){   
-}
+void Alien::Update() {}
 
-void Alien::Draw(){
-}
+void Alien::Draw() {}
