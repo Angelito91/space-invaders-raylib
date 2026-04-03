@@ -42,3 +42,9 @@
 
 # build output
 build/
+*.o
+*.out
+*.a
+*.so
+.cache/
+compile_commands_json
