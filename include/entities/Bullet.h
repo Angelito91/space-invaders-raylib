@@ -1,19 +1,19 @@
 #pragma once
 #include "Entity.h"
 
-/**
- * @brief Represents a projectile fired by the player or an alien
- * 
- */
-class Bullet: public Entity{ 
+enum class BulletType { PLAYER, ALIEN };
+
+class Bullet : public Entity {
+private:
+    BulletType type;
+    float bulletSpeed;
+
 public:
-    /**
-     * @brief Updates the bullet logic every frame
-     */
+    Bullet();
+    Bullet(Vector2 pos, Vector2 vel, BulletType t);
     virtual void Update() override;
-    
-    /**
-     * @brief Draws the bullet on screen
-     */
     virtual void Draw() override;
+
+    BulletType getType() const { return type; }
+    bool isPlayerBullet() const { return type == BulletType::PLAYER; }
 };

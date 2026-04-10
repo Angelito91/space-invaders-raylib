@@ -1,34 +1,35 @@
 #pragma once
 #include "raylib.h"
 
-/**
- * @brief Abstract base class for all game entities 
- */
 class Entity{
 protected:
-    Vector2 position;  ///< Position in the world
-    Vector2 velocity;  ///< Movement speed and direction
-    Texture2D texture; ///< Entity sprite
-    bool active;       ///< Whether the entity is active
+    Vector2 position;
+    Vector2 velocity;
+    Texture2D texture;
+    Color color;
+    bool active;
+    float width;
+    float height;
 
 public:
-    /**
-     * @brief Updates the entity logic every frame 
-     */
+    Entity();
+    Entity(Vector2 pos, Vector2 vel, Color col, float w, float h);
     virtual void Update() = 0;
-
-    /**
-     * @brief Draws the entity on screen
-     */
     virtual void Draw() = 0;
 
-    /**
-     * @brief Returns the colision rectangle derived from position and texture size 
-     * @return Rectangle used for collision detection
-     */
-    Rectangle getRect() {
-        return{ position.x, position.y, (float)texture.width, (float)texture.height };
+    Rectangle getRect() const {
+        return{ position.x, position.y, width, height };
     }
+
+    Vector2 getPosition() const { return position; }
+    void setPosition(Vector2 pos) { position = pos; }
+    Vector2 getVelocity() const { return velocity; }
+    void setVelocity(Vector2 vel) { velocity = vel; }
+    bool isActive() const { return active; }
+    void setActive(bool act) { active = act; }
+    float getWidth() const { return width; }
+    float getHeight() const { return height; }
+    Color getColor() const { return color; }
 
     virtual ~Entity() = default;
 };

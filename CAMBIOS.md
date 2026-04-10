@@ -191,6 +191,103 @@ space-invaders-raylib/
 
 ---
 
+## 📋 Nuevos Cambios - Mejoras de Jugador e Interfaz (09/04/2026)
+
+### 1. 🎮 Mejoras en el Jugador (Player.cpp)
+
+**Cambios en el constructor:**
+- Tamaño de nave aumentado: 50px → 60px de ancho
+- Velocidad ajustada: 6.0f → 5.0f (movimiento más controlable)
+- Fire rate mejorado: 0.3f → 0.25f (disparos más rápidos)
+- Color principal: GREEN → { 0, 200, 80, 255 } (verde más vivo)
+
+**Nuevo diseño visual de la nave:**
+- Cuerpo principal de 60x20 píxeles
+- Dos alas laterales extendidas (15x8 píxeles cada una)
+- Dos cañones gemelos en la parte superior (10x10 píxeles, color gris metálico)
+- Cabina de cristal en el centro (16x12 píxeles, color cyan translúcido)
+- Detalles de alas con sombras verdes más oscuras
+
+**Código del nuevo Draw():**
+```cpp
+void Player::Draw() {
+    Color shipColor = color;
+    Color cannonColor = { 150, 150, 150, 255 };
+    Color cockpitColor = { 100, 200, 255, 255 };
+    
+    DrawRectangle((int)position.x, (int)position.y, (int)width, (int)height, shipColor);
+    
+    DrawRectangle((int)position.x + 5, (int)position.y - 8, 15, 8, shipColor);
+    DrawRectangle((int)position.x + width - 20, (int)position.y - 8, 15, 8, shipColor);
+    
+    DrawRectangle((int)position.x + 5, (int)position.y - 18, 10, 10, cannonColor);
+    DrawRectangle((int)position.x + width - 15, (int)position.y - 18, 10, 10, cannonColor);
+    
+    DrawRectangle((int)position.x + width/2 - 8, (int)position.y - 12, 16, 12, cockpitColor);
+    
+    DrawRectangle((int)position.x + 10, (int)position.y + 5, 8, (int)height - 5, { 50, 150, 50, 255 });
+    DrawRectangle((int)position.x + width - 18, (int)position.y + 5, 8, (int)height - 5, { 50, 150, 50, 255 });
+}
+```
+
+### 2. 🖥️ Mejoras en la Interfaz (Game.cpp)
+
+**Nueva barra superior:**
+- Fondo oscuro semi-transparente: { 30, 30, 50, 255 }
+- Título "SPACE INVADERS" centrado en verde brillante
+- Posición Y: 15px desde arriba
+
+**Elementos de puntuación:**
+- "PUNTOS: X" alineado a la izquierda en amarillo
+- "MEJOR: X" centrado en dorado { 200, 200, 100, 255 }
+- Actualización automática del high score cuando se supera
+- "VIDAS: X" alineado a la derecha en rojo
+
+**Decoración del área de juego:**
+- Borde exterior: { 50, 50, 80, 255 } con 2px de grosor
+- Línea separadora bajo la barra superior
+- Instrucciones de controles en la parte inferior en gris
+
+**Nueva pantalla de Game Over:**
+- Fondo azul oscuro: { 20, 20, 40, 255 }
+- Texto "GAME OVER" grande en rojo (60px)
+- Puntuación final mostrada
+- Instrucciones para reiniciar
+
+**Código de draw() mejorado:**
+```cpp
+void Game::draw() {
+    DrawRectangle(0, 0, screenWidth, 50, { 30, 30, 50, 255 });
+    DrawRectangleLines(0, 0, screenWidth, screenHeight, { 50, 50, 80, 255 });
+    DrawLine(0, 50, screenWidth, 50, { 50, 50, 80, 255 });
+    
+    DrawText("SPACE INVADERS", screenWidth/2 - MeasureText("SPACE INVADERS", 20)/2, 15, 20, { 100, 255, 100, 255 });
+    DrawText(TextFormat("PUNTOS: %d", score), 20, 15, 20, YELLOW);
+    DrawText(TextFormat("MEJOR: %d", highScore), screenWidth/2 - ... , 20, { 200, 200, 100, 255 });
+    DrawText(TextFormat("VIDAS: %d", ...), screenWidth - 120, 15, 20, RED);
+    
+    entityManager.Draw();
+    
+    DrawText("CONTROLES: <- -> Mover  |  ESPACIO: Disparar", ... , 15, { 100, 100, 100, 255 });
+}
+```
+
+### 3. 🔧 Mejoras en Game.h
+
+- Añadido método `showGameOverScreen()` a la declaración pública para separar la lógica de la pantalla de fin de juego
+
+### 4. 📊 Resumen de Cambios Visuales
+
+| Elemento | Antes | Ahora |
+|----------|-------|-------|
+| Nave jugador | Rectángulo simple verde | Nave detallada con cañones y cabina |
+| Barra superior | Solo texto en pantalla | Fondo decorativo con título |
+| Borde | Ninguno | Borde decorativo azul |
+| Game Over | Texto básico | Pantalla estilizada con fondo |
+| Controles | No visibles | Mostrados en parte inferior |
+
+---
+
 **Resumen de Cambios**  
 **Fecha:** Abril 2026  
 **Rama Origen:** feature/core  

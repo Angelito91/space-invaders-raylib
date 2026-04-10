@@ -1,19 +1,10 @@
 #pragma once
 #include "Entity.h"
 
-/**
- * @brief Represents a single block of a barrier shield
- * 
- */
-class BarrierBlock: public Entity{
+class BarrierBlock : public Entity {
 public:
-    /**
-     * @brief Updates the block logic every frame
-     */
+    BarrierBlock();
+    BarrierBlock(Vector2 pos, Color col);
     virtual void Update() override;
-    
-    /**
-     * @brief Draws the block on screen
-     */
     virtual void Draw() override;
 };

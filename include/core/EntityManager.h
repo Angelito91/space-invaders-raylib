@@ -5,24 +5,28 @@
 #include "entities/BarrierBlock.h"
 #include "entities/Bullet.h"
 
-/**
- * @brief Manages the lifecycle of all game entities
- */
-class EntityManager{
+class EntityManager {
 private:
     Player player;
     std::vector<Alien> aliens;
-    std::vector<BarrierBlock> barrierblocks;
+    std::vector<BarrierBlock> barrierBlocks;
     std::vector<Bullet> bullets;
 
 public:
-    /**
-     * @brief Updates all active entities
-     */
-    void Update();
+    EntityManager();
 
-    /**
-     * @brief Draws all active entities
-     */
-    void Draw() ;
+    void Update();
+    void Draw();
+
+    Player& getPlayer() { return player; }
+    std::vector<Alien>& getAliens() { return aliens; }
+    std::vector<BarrierBlock>& getBarrierBlocks() { return barrierBlocks; }
+    std::vector<Bullet>& getBullets() { return bullets; }
+
+    void initEntities(int screenWidth, int screenHeight);
+    void addBullet(Bullet b) { bullets.push_back(b); }
+    void removeInactiveBullets();
+    void removeInactiveAliens();
+    void removeInactiveBarriers();
+    void resetAliens();
 };
