@@ -1,57 +1,44 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "raylib.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 
-/**
- * @brief Main orchestator of the game loop and systems
- */
 class Game {
 private:
     static constexpr int DEFAULT_SCREEN_WIDTH = 800;
     static constexpr int DEFAULT_SCREEN_HEIGHT = 600;
     static constexpr int DEFAULT_TARGET_FPS = 60;
 
-    int screenWidth,
-        screenHeight;
+    int screenWidth;
+    int screenHeight;
     std::string title;
     AssetManager assetManager;
     EntityManager entityManager;
+    int score;
+    int highScore;
+    bool gameOver;
+    bool paused;
+    float alienDirection;
+    float alienMoveTimer;
+    float alienShootTimer;
 
-    /**
-     * @brief Checks collision between two rectangles
-     * @param a First rectangle
-     * @param b Second rectangle
-     * @return True if they collide
-     */
-    static bool checkCollision(const Rectangle &rectA, const Rectangle &rectB);
+    static bool checkCollision(const Rectangle& rectA, const Rectangle& rectB);
 
 public:
     Game();
-
-    /**
-     * @brief Initialize the window and all systems
-     */
     void init();
-
-    /**
-     * @brief Stars the main game loop
-     */
     void run();
-
-    /**
-     * @brief Updates game logic every frame
-     */
     void update();
-
-    /**
-     * @brief Draws everything on screen
-     */
     void draw();
-
-    /**
-     * @brief Closes the window and frees resources
-     */
+    void showGameOverScreen();
     static void close();
+
+    int getScore() const { return score; }
+    int getHighScore() const { return highScore; }
+    bool isGameOver() const { return gameOver; }
+    void addScore(int points) { score += points; }
+    void setGameOver(bool go) { gameOver = go; }
+    void restart();
 };

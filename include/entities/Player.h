@@ -1,22 +1,21 @@
 #pragma once
 #include "Entity.h"
 
-/**
- * @brief Represents the player-controlled ship
- * 
- */
-class Player: public Entity{
+class Player : public Entity {
 private:
-    int lives; ///< Remaining lives
+    int lives;
+    float speed;
+    float fireRate;
+    float lastShot;
 
 public:
-    /**
-     * @brief Updates the player logic every frame
-     */
+    Player();
     virtual void Update() override;
-    
-    /**
-     * @brief Draws the ship on screen
-     */
     virtual void Draw() override;
+
+    int getLives() const { return lives; }
+    void setLives(int l) { lives = l; }
+    void decrementLives() { lives--; }
+    bool canShoot();
+    void resetPosition(int screenWidth, int screenHeight);
 };

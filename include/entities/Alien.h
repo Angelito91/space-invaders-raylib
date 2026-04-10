@@ -1,19 +1,22 @@
 #pragma once
 #include "Entity.h"
 
-/**
- * @brief Represents an enemy alien
- * 
- */
-class Alien: public Entity{ 
+enum class AlienType { TOP, MIDDLE, BOTTOM };
+
+class Alien : public Entity {
+private:
+    AlienType type;
+    int points;
+    float animTimer;
+    int frame;
+
 public:
-    /**
-     * @brief Updates the alien logic every frame
-     */
+    Alien();
+    Alien(Vector2 pos, AlienType t);
     virtual void Update() override;
-    
-    /**
-     * @brief Draws the alien on screen
-     */
     virtual void Draw() override;
+
+    AlienType getType() const { return type; }
+    int getPoints() const { return points; }
+    void setType(AlienType t);
 };
