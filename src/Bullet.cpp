@@ -1,4 +1,4 @@
-#include "entities/Bullet.h"
+#include "Bullet.h"
 
 Bullet::Bullet() : Entity(), type(BulletType::PLAYER), bulletSpeed(8.0f) {
     width = 4.0f;
@@ -7,14 +7,14 @@ Bullet::Bullet() : Entity(), type(BulletType::PLAYER), bulletSpeed(8.0f) {
     active = true;
 }
 
-Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType t) : Entity(), type(t), bulletSpeed(8.0f) {
+Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType bulletType) : Entity(), type(bulletType), bulletSpeed(8.0f) {
     width = 4.0f;
     height = 12.0f;
     position = pos;
     velocity = vel;
     active = true;
     
-    if (t == BulletType::PLAYER) {
+    if (bulletType == BulletType::PLAYER) {
         color = YELLOW;
     } else {
         color = RED;
@@ -22,7 +22,7 @@ Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType t) : Entity(), type(t), bull
     }
 }
 
-void Bullet::Update() {
+void Bullet::update() {
     position.x += velocity.x;
     position.y += velocity.y * bulletSpeed;
     
@@ -31,7 +31,7 @@ void Bullet::Update() {
     }
 }
 
-void Bullet::Draw() {
+void Bullet::draw() {
     if (!active) return;
     DrawRectangle((int)position.x, (int)position.y, (int)width, (int)height, color);
 }

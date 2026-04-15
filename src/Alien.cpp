@@ -1,4 +1,4 @@
-#include "entities/Alien.h"
+#include "Alien.h"
 
 Alien::Alien() : Entity(), type(AlienType::BOTTOM), points(10), animTimer(0), frame(0) {
     width = 40.0f;
@@ -8,7 +8,7 @@ Alien::Alien() : Entity(), type(AlienType::BOTTOM), points(10), animTimer(0), fr
     active = true;
 }
 
-Alien::Alien(Vector2 pos, AlienType t) : Entity(), type(t), points(10), animTimer(0), frame(0) {
+Alien::Alien(Vector2 pos, AlienType alienType) : Entity(), type(alienType), points(10), animTimer(0), frame(0) {
     width = 40.0f;
     height = 30.0f;
     position = pos;
@@ -17,8 +17,8 @@ Alien::Alien(Vector2 pos, AlienType t) : Entity(), type(t), points(10), animTime
     setType(t);
 }
 
-void Alien::setType(AlienType t) {
-    type = t;
+void Alien::setType(AlienType alienType) {
+    type = alienType;
     switch (type) {
         case AlienType::TOP: points = 30; color = MAGENTA; break;
         case AlienType::MIDDLE: points = 20; color = ORANGE; break;
@@ -26,7 +26,7 @@ void Alien::setType(AlienType t) {
     }
 }
 
-void Alien::Update() {
+void Alien::update() {
     position.x += velocity.x;
     animTimer += GetFrameTime();
     if (animTimer >= 0.5f) {
@@ -35,7 +35,7 @@ void Alien::Update() {
     }
 }
 
-void Alien::Draw() {
+void Alien::draw() {
     Color col = color;
     if (!active) return;
     

@@ -16,10 +16,10 @@ public:
      * @param path Path to the texture file
      * @return The Loaded Texture2D
      */
-    Texture2D LoadTexture(const std::string& path);
+    Texture2D loadTexture(const std::string& path);
 
     /**
      * @brief Unloads all loaded textures from memory
      */
-    void UnloadAll();
+    void unloadAll();
 };

@@ -1,5 +1,5 @@
-#include "core/Game.h"
-#include "entities/Alien.h"
+#include "Game.h"
+#include "Alien.h"
 #include "raylib.h"
 #include <vector>
 
@@ -51,7 +51,7 @@ void Game::showGameOverScreen() {
 }
 
 void Game::update() {
-    entityManager.Update();
+    entityManager.update();
     
     if (IsKeyPressed(KEY_SPACE) && entityManager.getPlayer().canShoot()) {
         Vector2 pos = entityManager.getPlayer().getPosition();
@@ -182,7 +182,7 @@ void Game::draw() {
     
     DrawText(TextFormat("VIDAS: %d", entityManager.getPlayer().getLives()), screenWidth - 120, 15, 20, RED);
     
-    entityManager.Draw();
+    entityManager.draw();
     
     DrawText("CONTROLES: <- -> Mover  |  ESPACIO: Disparar", screenWidth/2 - MeasureText("CONTROLES: <- -> Mover  |  ESPACIO: Disparar", 15)/2, screenHeight - 25, 15, { 100, 100, 100, 255 });
 }

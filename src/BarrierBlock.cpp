@@ -1,4 +1,4 @@
-#include "entities/BarrierBlock.h"
+#include "BarrierBlock.h"
 
 BarrierBlock::BarrierBlock() : Entity() {
     width = 10.0f;
@@ -15,10 +15,10 @@ BarrierBlock::BarrierBlock(Vector2 pos, Color col) : Entity() {
     active = true;
 }
 
-void BarrierBlock::Update() {
+void BarrierBlock::update() {
 }
 
-void BarrierBlock::Draw() {
+void BarrierBlock::draw() {
     if (!active) return;
     DrawRectangle((int)position.x, (int)position.y, (int)width, (int)height, color);
 }

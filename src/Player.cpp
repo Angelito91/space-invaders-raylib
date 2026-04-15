@@ -1,4 +1,4 @@
-#include "entities/Player.h"
+#include "Player.h"
 
 Player::Player() : Entity(), lives(3), speed(5.0f), fireRate(0.25f), lastShot(0.0f) {
     width = 60.0f;
@@ -9,7 +9,7 @@ Player::Player() : Entity(), lives(3), speed(5.0f), fireRate(0.25f), lastShot(0.
     active = true;
 }
 
-void Player::Update() {
+void Player::update() {
     velocity = { 0, 0 };
     
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
@@ -27,7 +27,7 @@ void Player::Update() {
     lastShot += GetFrameTime();
 }
 
-void Player::Draw() {
+void Player::draw() {
     Color shipColor = color;
     Color cannonColor = { 150, 150, 150, 255 };
     Color cockpitColor = { 100, 200, 255, 255 };

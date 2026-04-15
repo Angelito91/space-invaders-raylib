@@ -1,4 +1,4 @@
-#include "core/EntityManager.h"
+#include "EntityManager.h"
 #include <algorithm>
 
 EntityManager::EntityManager() {
@@ -14,13 +14,13 @@ void EntityManager::initEntities(int screenWidth, int screenHeight) {
     
     for (int row = 0; row < 5; row++) {
         for (int col = 0; col < 11; col++) {
-            AlienType type;
-            if (row == 0) type = AlienType::TOP;
-            else if (row < 3) type = AlienType::MIDDLE;
-            else type = AlienType::BOTTOM;
+            AlienType alienType;
+            if (row == 0) alienType = AlienType::TOP;
+            else if (row < 3) alienType = AlienType::MIDDLE;
+            else alienType = AlienType::BOTTOM;
             
             Vector2 pos = { startX + col * 60.0f, startY + row * 45.0f };
-            aliens.push_back(Alien(pos, type));
+            aliens.push_back(Alien(pos, alienType));
         }
     }
     
@@ -46,41 +46,41 @@ void EntityManager::initEntities(int screenWidth, int screenHeight) {
     player.resetPosition(screenWidth, screenHeight);
 }
 
-void EntityManager::Update() {
-    player.Update();
+void EntityManager::update() {
+    player.update();
     
     for (auto& alien : aliens) {
-        alien.Update();
+        alien.update();
     }
     
     for (auto& bullet : bullets) {
-        bullet.Update();
+        bullet.update();
     }
     
     for (auto& block : barrierBlocks) {
-        block.Update();
+        block.update();
     }
 }
 
-void EntityManager::Draw() {
-    player.Draw();
+void EntityManager::draw() {
+    player.draw();
     
     for (auto& alien : aliens) {
-        alien.Draw();
+        alien.draw();
     }
     
     for (auto& bullet : bullets) {
-        bullet.Draw();
+        bullet.draw();
     }
     
     for (auto& block : barrierBlocks) {
-        block.Draw();
+        block.draw();
     }
 }
 
 void EntityManager::removeInactiveBullets() {
     bullets.erase(
-        std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& b) { return !b.isActive(); }),
+        std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& bullet) { return !bullet.isActive(); }),
         bullets.end()
     );
 }
@@ -106,13 +106,13 @@ void EntityManager::resetAliens() {
     
     for (int row = 0; row < 5; row++) {
         for (int col = 0; col < 11; col++) {
-            AlienType type;
-            if (row == 0) type = AlienType::TOP;
-            else if (row < 3) type = AlienType::MIDDLE;
-            else type = AlienType::BOTTOM;
+            AlienType alienType;
+            if (row == 0) alienType = AlienType::TOP;
+            else if (row < 3) alienType = AlienType::MIDDLE;
+            else alienType = AlienType::BOTTOM;
             
             Vector2 pos = { startX + col * 60.0f, startY + row * 45.0f };
-            aliens.push_back(Alien(pos, type));
+            aliens.push_back(Alien(pos, alienType));
         }
     }
 }
