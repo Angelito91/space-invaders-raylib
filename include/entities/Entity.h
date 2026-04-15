@@ -19,7 +19,7 @@ public:
     /**
      * @brief Default constructor
      */
-    Entity() = default;
+    Entity();
 
     /**
      * @brief Constructor with initial values

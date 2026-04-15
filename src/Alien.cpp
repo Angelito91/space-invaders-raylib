@@ -14,7 +14,7 @@ Alien::Alien(Vector2 pos, AlienType alienType) : Entity(), type(alienType), poin
     position = pos;
     velocity = { 1.0f, 0 };
     active = true;
-    setType(t);
+    setType(alienType);
 }
 
 void Alien::setType(AlienType alienType) {
