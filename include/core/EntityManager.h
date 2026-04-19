@@ -1,21 +1,22 @@
 #pragma once
 #include <vector>
-#include "Player.h"
+
 #include "Alien.h"
 #include "BarrierBlock.h"
 #include "Bullet.h"
+#include "Player.h"
 
 /**
  * @brief Manages the lifecycle of all game entities
  */
 class EntityManager {
-private:
-    Player player;
-    std::vector<Alien> aliens;
+   private:
+    Player                    player;
+    std::vector<Alien>        aliens;
     std::vector<BarrierBlock> barrierBlocks;
-    std::vector<Bullet> bullets;
+    std::vector<Bullet>       bullets;
 
-public:
+   public:
     /**
      * @brief Constructor
      */
@@ -35,25 +36,33 @@ public:
      * @brief Gets a reference to the player
      * @return Reference to the player entity
      */
-    Player& getPlayer() { return player; }
+    Player& getPlayer() {
+        return player;
+    }
 
     /**
      * @brief Gets a reference to all aliens
      * @return Reference to the aliens vector
      */
-    std::vector<Alien>& getAliens() { return aliens; }
+    std::vector<Alien>& getAliens() {
+        return aliens;
+    }
 
     /**
      * @brief Gets a reference to all barrier blocks
      * @return Reference to the barrier blocks vector
      */
-    std::vector<BarrierBlock>& getBarrierBlocks() { return barrierBlocks; }
+    std::vector<BarrierBlock>& getBarrierBlocks() {
+        return barrierBlocks;
+    }
 
     /**
      * @brief Gets a reference to all bullets
      * @return Reference to the bullets vector
      */
-    std::vector<Bullet>& getBullets() { return bullets; }
+    std::vector<Bullet>& getBullets() {
+        return bullets;
+    }
 
     /**
      * @brief Initializes all entities with their starting positions
@@ -64,9 +73,11 @@ public:
 
     /**
      * @brief Adds a bullet to the game
-     * @param b The bullet to add
+     * @param bullet The bullet to add
      */
-    void addBullet(Bullet b) { bullets.push_back(b); }
+    void addBullet(const Bullet& bullet) {
+        bullets.push_back(bullet);
+    }
 
     /**
      * @brief Removes all inactive bullets from the game

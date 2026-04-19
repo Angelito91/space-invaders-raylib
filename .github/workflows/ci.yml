@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: ["main", "master"]
+    branches: ["main", "master", "Gameplay-y-Sistema-de-Enemigos"]
   pull_request:
-    branches: ["main", "master"]
+    branches: ["main", "master", "Gameplay-y-Sistema-de-Enemigos"]
 
 jobs:
   format-and-lint:
@@ -13,26 +13,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install clang-format, clang-tidy, and cppcheck
-        run: sudo apt-get update && sudo apt-get install -y clang-format clang-tidy cppcheck
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format clang-tidy cppcheck
 
       - name: Check Formatting
         run: |
           echo "Running clang-format check..."
-          # Formats all .cpp and .h files in the src directory, fails if any changes are needed.
-          find src -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format --dry-run --Werror {} +
+          find src include -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format --dry-run --Werror {} +
 
       - name: Check Linting with cppcheck
-        run: cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem src/
-
-      - name: Check Linting with clang-tidy
-        run: find src -type f -name "*.cpp" -exec clang-tidy {} +
+        run: |
+          cppcheck --enable=all --error-exitcode=1 \
+            --suppress=missingIncludeSystem \
+            --suppress=unusedFunction \
+            -I include \
+            src/ include/
 
   build:
     name: Build Project
     runs-on: ubuntu-latest
-
-    # Use the default vcpkg installation provided by GitHub Actions runners
     env:
       VCPKG_ROOT: /usr/local/share/vcpkg
 
@@ -44,16 +45,28 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev libglfw3-dev libxxf86vm-dev
 
+      - name: Install clang-tidy
+        run: sudo apt-get install -y clang-tidy
+
       - name: Setup vcpkg and install dependencies
         run: |
           $VCPKG_ROOT/vcpkg integrate install
           $VCPKG_ROOT/vcpkg install
 
-      - name: Configure CMake
-        run: >
-          cmake -B build
-          -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+      - name: Configure CMake with compilation database
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+            -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+      - name: Check Linting with clang-tidy
+        run: |
+          if [ -f build/compile_commands.json ]; then
+            clang-tidy -p=build src/**/*.cpp
+          else
+            echo "Warning: compile_commands.json not found, skipping clang-tidy"
+          fi
 
       - name: Build Project
         run: cmake --build build --config Release

@@ -1,4 +1,8 @@
-#include "AssetManager.h"
+#include "core/AssetManager.h"
+
+#include <string>
+
+#include "raylib.h"
 
 Texture2D AssetManager::loadTexture(const std::string& path) {
     auto iterator = textures.find(path);
@@ -6,7 +10,7 @@ Texture2D AssetManager::loadTexture(const std::string& path) {
         return iterator->second;
     }
     Texture2D texture = LoadTexture(path.c_str());
-    textures[path] = texture;
+    textures[path]    = texture;
     return texture;
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+
 #include "Entity.h"
 
 /**
@@ -10,14 +11,14 @@ enum class AlienType : std::uint8_t { TOP, MIDDLE, BOTTOM };
 /**
  * @brief Represents an enemy alien
  */
-class Alien: public Entity {
-private:
+class Alien : public Entity {
+   private:
     AlienType type;
-    int points;
-    float animTimer;
-    int frame;
+    int       points;
+    float     animTimer;
+    int       frame;
 
-public:
+   public:
     /**
      * @brief Default constructor
      */
@@ -34,7 +35,7 @@ public:
      * @brief Updates the alien logic every frame
      */
     virtual void update() override;
-    
+
     /**
      * @brief Draws the alien on screen
      */
@@ -44,13 +45,17 @@ public:
      * @brief Gets the alien type
      * @return The alien type
      */
-    AlienType getType() const { return type; }
+    AlienType getType() const {
+        return type;
+    }
 
     /**
      * @brief Gets the points value for this alien
      * @return Points awarded for destroying this alien
      */
-    int getPoints() const { return points; }
+    int getPoints() const {
+        return points;
+    }
 
     /**
      * @brief Sets the alien type and updates properties accordingly

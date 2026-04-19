@@ -4,8 +4,8 @@
 /**
  * @brief Represents a single block of a barrier shield
  */
-class BarrierBlock: public Entity {
-public:
+class BarrierBlock : public Entity {
+   public:
     /**
      * @brief Default constructor
      */
@@ -22,7 +22,7 @@ public:
      * @brief Updates the block logic every frame
      */
     virtual void update() override;
-    
+
     /**
      * @brief Draws the block on screen
      */

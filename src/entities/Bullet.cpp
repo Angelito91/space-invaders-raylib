@@ -1,23 +1,26 @@
-#include "Bullet.h"
+#include "entities/Bullet.h"
+
+#include "raylib.h"
 
 Bullet::Bullet() : Entity(), type(BulletType::PLAYER), bulletSpeed(8.0f) {
-    width = 4.0f;
+    width  = 4.0f;
     height = 12.0f;
-    color = YELLOW;
+    color  = YELLOW;
     active = true;
 }
 
-Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType bulletType) : Entity(), type(bulletType), bulletSpeed(8.0f) {
-    width = 4.0f;
-    height = 12.0f;
+Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType bulletType)
+    : Entity(), type(bulletType), bulletSpeed(8.0f) {
+    width    = 4.0f;
+    height   = 12.0f;
     position = pos;
     velocity = vel;
-    active = true;
-    
+    active   = true;
+
     if (bulletType == BulletType::PLAYER) {
         color = YELLOW;
     } else {
-        color = RED;
+        color       = RED;
         bulletSpeed = 4.0f;
     }
 }
@@ -25,7 +28,7 @@ Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType bulletType) : Entity(), type
 void Bullet::update() {
     position.x += velocity.x;
     position.y += velocity.y * bulletSpeed;
-    
+
     if (position.y < 0 || position.y > 650) {
         active = false;
     }

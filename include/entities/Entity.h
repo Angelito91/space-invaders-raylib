@@ -1,21 +1,20 @@
 #pragma once
-#include <cstdint>
 #include "raylib.h"
 
 /**
  * @brief Abstract base class for all game entities
  */
 class Entity {
-protected:
-    Vector2 position = {};      ///< Position in the world
-    Vector2 velocity = {};      ///< Movement speed and direction
-    Texture2D texture = {};     ///< Entity sprite
-    bool active = false;        ///< Whether the entity is active
-    float width = 0.0F;         ///< Width of the entity
-    float height = 0.0F;        ///< Height of the entity
-    Color color = WHITE;        ///< Color of the entity
+   protected:
+    Vector2   position = {};     ///< Position in the world
+    Vector2   velocity = {};     ///< Movement speed and direction
+    Texture2D texture  = {};     ///< Entity sprite
+    bool      active   = false;  ///< Whether the entity is active
+    float     width    = 0.0F;   ///< Width of the entity
+    float     height   = 0.0F;   ///< Height of the entity
+    Color     color    = WHITE;  ///< Color of the entity
 
-public:
+   public:
     /**
      * @brief Default constructor
      */
@@ -66,18 +65,36 @@ public:
      * @return Rectangle used for collision detection
      */
     Rectangle getRect() const {
-        return { position.x, position.y, width, height };
+        return {position.x, position.y, width, height};
     }
 
-    Vector2 getPosition() const { return position; }
-    void setPosition(Vector2 pos) { position = pos; }
-    Vector2 getVelocity() const { return velocity; }
-    void setVelocity(Vector2 vel) { velocity = vel; }
-    bool isActive() const { return active; }
-    void setActive(bool act) { active = act; }
-    float getWidth() const { return width; }
-    float getHeight() const { return height; }
-    Color getColor() const { return color; }
+    Vector2 getPosition() const {
+        return position;
+    }
+    void setPosition(Vector2 pos) {
+        position = pos;
+    }
+    Vector2 getVelocity() const {
+        return velocity;
+    }
+    void setVelocity(Vector2 vel) {
+        velocity = vel;
+    }
+    bool isActive() const {
+        return active;
+    }
+    void setActive(bool act) {
+        active = act;
+    }
+    float getWidth() const {
+        return width;
+    }
+    float getHeight() const {
+        return height;
+    }
+    Color getColor() const {
+        return color;
+    }
 
     virtual ~Entity() = default;
 };

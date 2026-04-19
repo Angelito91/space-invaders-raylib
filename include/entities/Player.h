@@ -4,14 +4,14 @@
 /**
  * @brief Represents the player-controlled ship
  */
-class Player: public Entity {
-private:
-    int lives;              ///< Remaining lives
-    float speed;            ///< Movement speed
-    float fireRate;         ///< Time between shots
-    float lastShot;         ///< Time since last shot
+class Player : public Entity {
+   private:
+    int   lives;     ///< Remaining lives
+    float speed;     ///< Movement speed
+    float fireRate;  ///< Time between shots
+    float lastShot;  ///< Time since last shot
 
-public:
+   public:
     /**
      * @brief Default constructor
      */
@@ -21,7 +21,7 @@ public:
      * @brief Updates the player logic every frame
      */
     virtual void update() override;
-    
+
     /**
      * @brief Draws the ship on screen
      */
@@ -31,18 +31,24 @@ public:
      * @brief Gets remaining lives
      * @return Number of lives
      */
-    int getLives() const { return lives; }
+    int getLives() const {
+        return lives;
+    }
 
     /**
      * @brief Sets the number of lives
      * @param l New number of lives
      */
-    void setLives(int numLives) { lives = numLives; }
+    void setLives(int numLives) {
+        lives = numLives;
+    }
 
     /**
      * @brief Decrements lives by one
      */
-    void decrementLives() { lives--; }
+    void decrementLives() {
+        lives--;
+    }
 
     /**
      * @brief Checks if the player can shoot
