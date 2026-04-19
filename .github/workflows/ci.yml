@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: ["main", "master", "Gameplay-y-Sistema-de-Enemigos"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "master", "Gameplay-y-Sistema-de-Enemigos"]
+    branches: ["main"]
 
 jobs:
   format-and-lint:
