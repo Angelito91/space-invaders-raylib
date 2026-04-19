@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <vector>
 
 #include "Alien.h"
@@ -11,6 +12,25 @@
  */
 class EntityManager {
    private:
+    // Alien grid configuration
+    static constexpr int   ALIEN_GRID_ROWS = 5;
+    static constexpr int   ALIEN_GRID_COLS = 11;
+    static constexpr float ALIEN_START_X   = 80.0F;
+    static constexpr float ALIEN_START_Y   = 80.0F;
+    static constexpr float ALIEN_SPACING_X = 60.0F;
+    static constexpr float ALIEN_SPACING_Y = 45.0F;
+
+    // Barrier configuration
+    static constexpr int   BARRIER_COUNT      = 4;
+    static constexpr int   BARRIER_POS_1      = 100;
+    static constexpr int   BARRIER_POS_2      = 250;
+    static constexpr int   BARRIER_POS_3      = 400;
+    static constexpr int   BARRIER_POS_4      = 550;
+    static constexpr float BARRIER_Y          = 450.0F;
+    static constexpr int   BARRIER_ROWS       = 4;
+    static constexpr int   BARRIER_COLS       = 6;
+    static constexpr float BARRIER_BLOCK_SIZE = 10.0F;
+
     Player                    player;
     std::vector<Alien>        aliens;
     std::vector<BarrierBlock> barrierBlocks;

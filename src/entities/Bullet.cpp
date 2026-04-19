@@ -2,17 +2,17 @@
 
 #include "raylib.h"
 
-Bullet::Bullet() : Entity(), type(BulletType::PLAYER), bulletSpeed(8.0f) {
-    width  = 4.0f;
-    height = 12.0f;
+Bullet::Bullet() : type(BulletType::PLAYER), bulletSpeed(PLAYER_BULLET_SPEED) {
+    width  = BULLET_WIDTH;
+    height = BULLET_HEIGHT;
     color  = YELLOW;
     active = true;
 }
 
 Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType bulletType)
-    : Entity(), type(bulletType), bulletSpeed(8.0f) {
-    width    = 4.0f;
-    height   = 12.0f;
+    : type(bulletType), bulletSpeed(PLAYER_BULLET_SPEED) {
+    width    = BULLET_WIDTH;
+    height   = BULLET_HEIGHT;
     position = pos;
     velocity = vel;
     active   = true;
@@ -21,7 +21,7 @@ Bullet::Bullet(Vector2 pos, Vector2 vel, BulletType bulletType)
         color = YELLOW;
     } else {
         color       = RED;
-        bulletSpeed = 4.0f;
+        bulletSpeed = ALIEN_BULLET_SPEED;
     }
 }
 
@@ -29,12 +29,15 @@ void Bullet::update() {
     position.x += velocity.x;
     position.y += velocity.y * bulletSpeed;
 
-    if (position.y < 0 || position.y > 650) {
+    if (position.y < 0 || position.y > BULLET_SCREEN_LIMIT) {
         active = false;
     }
 }
 
 void Bullet::draw() {
-    if (!active) return;
-    DrawRectangle((int)position.x, (int)position.y, (int)width, (int)height, color);
+    if (!active) {
+        return;
+    }
+    DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y),
+                  static_cast<int>(width), static_cast<int>(height), color);
 }

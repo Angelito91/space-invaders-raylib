@@ -1,51 +1,54 @@
 #include "core/EntityManager.h"
 
 #include <algorithm>
+#include <array>
 
 #include "entities/Alien.h"
 #include "entities/BarrierBlock.h"
 #include "entities/Bullet.h"
 #include "entities/Player.h"
 
-EntityManager::EntityManager() {}
+EntityManager::EntityManager() = default;
 
 void EntityManager::initEntities(int screenWidth, int screenHeight) {
     aliens.clear();
     barrierBlocks.clear();
     bullets.clear();
 
-    float startX = 80.0f;
-    float startY = 80.0f;
-
-    for (int row = 0; row < 5; row++) {
-        for (int col = 0; col < 11; col++) {
-            AlienType alienType;
-            if (row == 0)
+    // Initialize aliens in grid
+    for (int row = 0; row < ALIEN_GRID_ROWS; row++) {
+        for (int col = 0; col < ALIEN_GRID_COLS; col++) {
+            AlienType alienType = AlienType::BOTTOM;
+            if (row == 0) {
                 alienType = AlienType::TOP;
-            else if (row < 3)
+            } else if (row < 3) {
                 alienType = AlienType::MIDDLE;
-            else
-                alienType = AlienType::BOTTOM;
+            }
 
-            Vector2 pos = {startX + col * 60.0f, startY + row * 45.0f};
-            aliens.push_back(Alien(pos, alienType));
+            Vector2 pos = {ALIEN_START_X + (static_cast<float>(col) * ALIEN_SPACING_X),
+                           ALIEN_START_Y + (static_cast<float>(row) * ALIEN_SPACING_Y)};
+            aliens.emplace_back(pos, alienType);
         }
     }
 
-    float barrierY           = 450.0f;
-    int   barrierPositions[] = {100, 250, 400, 550};
+    // Barrier positions
+    constexpr std::array<int, BARRIER_COUNT> barrierPositions = {100, 250, 400, 550};
 
-    for (int b = 0; b < 4; b++) {
-        float bx = (float)barrierPositions[b];
+    // Initialize barriers
+    for (int barrierPosition : barrierPositions) {
+        auto barrierX = static_cast<float>(barrierPosition);
 
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 6; col++) {
+        for (int row = 0; row < BARRIER_ROWS; row++) {
+            for (int col = 0; col < BARRIER_COLS; col++) {
                 bool isHole = false;
-                if (row == 3 && (col == 2 || col == 3)) isHole = true;
+                if (row == 3 && (col == 2 || col == 3)) {
+                    isHole = true;
+                }
 
                 if (!isHole) {
-                    Vector2 pos = {bx + col * 10.0f, barrierY + row * 10.0f};
-                    barrierBlocks.push_back(BarrierBlock(pos, GREEN));
+                    Vector2 pos = {barrierX + (static_cast<float>(col) * BARRIER_BLOCK_SIZE),
+                                   BARRIER_Y + (static_cast<float>(row) * BARRIER_BLOCK_SIZE)};
+                    barrierBlocks.emplace_back(pos, GREEN);
                 }
             }
         }
@@ -93,34 +96,33 @@ void EntityManager::removeInactiveBullets() {
 }
 
 void EntityManager::removeInactiveAliens() {
-    aliens.erase(
-        std::remove_if(aliens.begin(), aliens.end(), [](const Alien& a) { return !a.isActive(); }),
-        aliens.end());
+    aliens.erase(std::remove_if(aliens.begin(), aliens.end(),
+                                [](const Alien& alien) { return !alien.isActive(); }),
+                 aliens.end());
 }
 
 void EntityManager::removeInactiveBarriers() {
     barrierBlocks.erase(std::remove_if(barrierBlocks.begin(), barrierBlocks.end(),
-                                       [](const BarrierBlock& b) { return !b.isActive(); }),
+                                       [](const BarrierBlock& block) { return !block.isActive(); }),
                         barrierBlocks.end());
 }
 
 void EntityManager::resetAliens() {
     aliens.clear();
-    float startX = 80.0f;
-    float startY = 80.0f;
 
-    for (int row = 0; row < 5; row++) {
-        for (int col = 0; col < 11; col++) {
-            AlienType alienType;
-            if (row == 0)
+    // Reinitialize aliens in grid
+    for (int row = 0; row < ALIEN_GRID_ROWS; row++) {
+        for (int col = 0; col < ALIEN_GRID_COLS; col++) {
+            AlienType alienType = AlienType::BOTTOM;
+            if (row == 0) {
                 alienType = AlienType::TOP;
-            else if (row < 3)
+            } else if (row < 3) {
                 alienType = AlienType::MIDDLE;
-            else
-                alienType = AlienType::BOTTOM;
+            }
 
-            Vector2 pos = {startX + col * 60.0f, startY + row * 45.0f};
-            aliens.push_back(Alien(pos, alienType));
+            Vector2 pos = {ALIEN_START_X + (static_cast<float>(col) * ALIEN_SPACING_X),
+                           ALIEN_START_Y + (static_cast<float>(row) * ALIEN_SPACING_Y)};
+            aliens.emplace_back(pos, alienType);
         }
     }
 }

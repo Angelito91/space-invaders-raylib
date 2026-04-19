@@ -1,22 +1,13 @@
 #include "core/Game.h"
 
+#include <algorithm>
 #include <vector>
 
 #include "entities/Alien.h"
 #include "entities/Bullet.h"
 #include "raylib.h"
 
-Game::Game()
-    : screenWidth(DEFAULT_SCREEN_WIDTH),
-      screenHeight(DEFAULT_SCREEN_HEIGHT),
-      title("Space Invaders"),
-      score(0),
-      highScore(0),
-      gameOver(false),
-      paused(false),
-      alienDirection(1.0F),
-      alienMoveTimer(0.0F),
-      alienShootTimer(0.0F) {}
+Game::Game() : title("Space Invaders") {}
 
 void Game::init() {
     InitWindow(screenWidth, screenHeight, title.c_str());
@@ -76,7 +67,7 @@ void Game::updateAlienMovement() {
     alienMoveTimer = 0.0F;
 
     bool needDrop = false;
-    for (auto& alien : entityManager.getAliens()) {
+    for (const auto& alien : entityManager.getAliens()) {
         if (!alien.isActive()) {
             continue;
         }
@@ -84,8 +75,9 @@ void Game::updateAlienMovement() {
         const float rightEdge = alien.getPosition().x + alien.getWidth();
         const float leftEdge  = alien.getPosition().x;
 
-        if ((alienDirection > 0 && rightEdge >= (screenWidth - ALIEN_EDGE_MARGIN)) ||
-            (alienDirection < 0 && leftEdge <= ALIEN_EDGE_MARGIN)) {
+        if ((alienDirection > 0 && rightEdge >= (static_cast<float>(screenWidth) -
+                                                 static_cast<float>(ALIEN_EDGE_MARGIN))) ||
+            (alienDirection < 0 && leftEdge <= static_cast<float>(ALIEN_EDGE_MARGIN))) {
             needDrop = true;
             break;
         }
@@ -119,17 +111,15 @@ void Game::updateAlienShooting() {
     alienShootTimer = 0.0F;
 
     std::vector<Alien> activeAliens;
-    for (auto& alien : entityManager.getAliens()) {
-        if (alien.isActive()) {
-            activeAliens.push_back(alien);
-        }
-    }
+    std::copy_if(entityManager.getAliens().begin(), entityManager.getAliens().end(),
+                 std::back_inserter(activeAliens), [](const Alien& a) { return a.isActive(); });
 
     if (activeAliens.empty()) {
         return;
     }
 
-    int          randIdx    = GetRandomValue(0, static_cast<int>(activeAliens.size()) - 1);
+    size_t randIdx =
+        static_cast<size_t>(GetRandomValue(0, static_cast<int>(activeAliens.size()) - 1));
     const Alien& shooter    = activeAliens[randIdx];
     Vector2      shooterPos = shooter.getPosition();
     Vector2      bulletPos  = {shooterPos.x + (shooter.getWidth() / 2.0F) - BULLET_OFFSET_X,
@@ -254,9 +244,7 @@ void Game::drawHeader() {
     const char* scoreText = TextFormat("PUNTOS: %d", score);
     DrawText(scoreText, 20, 15, TEXT_SIZE_SMALL, YELLOW);
 
-    if (score > highScore) {
-        highScore = score;
-    }
+    highScore = std::max(score, highScore);
 
     const char* highScoreText  = TextFormat("MEJOR: %d", highScore);
     const int   highScoreWidth = MeasureText(highScoreText, TEXT_SIZE_SMALL);

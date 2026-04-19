@@ -2,20 +2,20 @@
 
 #include "raylib.h"
 
-Alien::Alien() : Entity(), type(AlienType::BOTTOM), points(10), animTimer(0), frame(0) {
-    width    = 40.0f;
-    height   = 30.0f;
-    velocity = {1.0f, 0};
+Alien::Alien() : type(AlienType::BOTTOM), points(10), animTimer(0), frame(0) {
+    width    = ALIEN_WIDTH;
+    height   = ALIEN_HEIGHT;
+    velocity = {INITIAL_VELOCITY, 0};
     color    = RED;
     active   = true;
 }
 
 Alien::Alien(Vector2 pos, AlienType alienType)
-    : Entity(), type(alienType), points(10), animTimer(0), frame(0) {
-    width    = 40.0f;
-    height   = 30.0f;
+    : type(alienType), points(10), animTimer(0), frame(0) {
+    width    = ALIEN_WIDTH;
+    height   = ALIEN_HEIGHT;
     position = pos;
-    velocity = {1.0f, 0};
+    velocity = {INITIAL_VELOCITY, 0};
     active   = true;
     setType(alienType);
 }
@@ -41,7 +41,7 @@ void Alien::setType(AlienType alienType) {
 void Alien::update() {
     position.x += velocity.x;
     animTimer += GetFrameTime();
-    if (animTimer >= 0.5f) {
+    if (animTimer >= ANIMATION_INTERVAL) {
         frame     = (frame + 1) % 2;
         animTimer = 0;
     }
@@ -49,24 +49,28 @@ void Alien::update() {
 
 void Alien::draw() {
     Color col = color;
-    if (!active) return;
-
-    int x = (int)position.x;
-    int y = (int)position.y;
-
-    DrawRectangle(x + 5, y, 30, 10, col);
-    DrawRectangle(x, y + 5, 40, 15, col);
-    DrawRectangle(x + 5, y + 20, 10, 10, col);
-    DrawRectangle(x + 25, y + 20, 10, 10, col);
-
-    if (frame == 0) {
-        DrawRectangle(x, y + 5, 5, 10, col);
-        DrawRectangle(x + 35, y + 5, 5, 10, col);
-    } else {
-        DrawRectangle(x, y + 10, 5, 10, col);
-        DrawRectangle(x + 35, y + 10, 5, 10, col);
+    if (!active) {
+        return;
     }
 
-    DrawPixel(x + 10, y + 10, BLACK);
-    DrawPixel(x + 30, y + 10, BLACK);
+    int posX = static_cast<int>(position.x);
+    int posY = static_cast<int>(position.y);
+
+    DrawRectangle(posX + BODY_TOP_OFFSET, posY, BODY_TOP_WIDTH, BODY_TOP_HEIGHT, col);
+    DrawRectangle(posX, posY + BODY_MAIN_OFFSET, BODY_MAIN_WIDTH, BODY_MAIN_HEIGHT, col);
+    DrawRectangle(posX + BODY_TOP_OFFSET, posY + LEGS_OFFSET_Y, LEGS_WIDTH, LEGS_HEIGHT, col);
+    DrawRectangle(posX + LEGS_RIGHT_OFFSET, posY + LEGS_OFFSET_Y, LEGS_WIDTH, LEGS_HEIGHT, col);
+
+    if (frame == 0) {
+        DrawRectangle(posX + LEGS_LEFT_OFFSET, posY + BODY_MAIN_OFFSET, ARMS_WIDTH, ARMS_HEIGHT,
+                      col);
+        DrawRectangle(posX + 35, posY + BODY_MAIN_OFFSET, ARMS_WIDTH, ARMS_HEIGHT, col);
+    } else {
+        DrawRectangle(posX + LEGS_LEFT_OFFSET, posY + ARMS_OFFSET_ALT, ARMS_WIDTH, ARMS_HEIGHT,
+                      col);
+        DrawRectangle(posX + 35, posY + ARMS_OFFSET_ALT, ARMS_WIDTH, ARMS_HEIGHT, col);
+    }
+
+    DrawPixel(posX + EYE_LEFT_X, posY + EYES_Y_OFFSET, BLACK);
+    DrawPixel(posX + EYE_RIGHT_X, posY + EYES_Y_OFFSET, BLACK);
 }

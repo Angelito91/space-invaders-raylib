@@ -21,10 +21,10 @@ class BarrierBlock : public Entity {
     /**
      * @brief Updates the block logic every frame
      */
-    virtual void update() override;
+    void update() override;
 
     /**
      * @brief Draws the block on screen
      */
-    virtual void draw() override;
+    void draw() override;
 };

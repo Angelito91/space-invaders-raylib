@@ -76,18 +76,18 @@ class Game {
     static constexpr unsigned char COLOR_CONTROLS_B = 100;
     static constexpr unsigned char COLOR_CONTROLS_A = 255;
 
-    int           screenWidth;
-    int           screenHeight;
+    int           screenWidth{DEFAULT_SCREEN_WIDTH};
+    int           screenHeight{DEFAULT_SCREEN_HEIGHT};
     std::string   title;
     AssetManager  assetManager;
     EntityManager entityManager;
-    int           score;
-    int           highScore;
-    bool          gameOver;
-    bool          paused;
-    float         alienDirection;
-    float         alienMoveTimer;
-    float         alienShootTimer;
+    int           score{0};
+    int           highScore{0};
+    bool          gameOver{false};
+    bool          paused{false};
+    float         alienDirection{1.0F};
+    float         alienMoveTimer{0.0F};
+    float         alienShootTimer{0.0F};
 
     /**
      * @brief Updates alien movement logic
@@ -160,13 +160,13 @@ class Game {
      */
     static void close();
 
-    int getScore() const {
+    [[nodiscard]] int getScore() const {
         return score;
     }
-    int getHighScore() const {
+    [[nodiscard]] int getHighScore() const {
         return highScore;
     }
-    bool isGameOver() const {
+    [[nodiscard]] bool isGameOver() const {
         return gameOver;
     }
     void addScore(int points) {

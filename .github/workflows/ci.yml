@@ -27,9 +27,36 @@ jobs:
         run: |
           cppcheck --enable=all --error-exitcode=1 \
             --suppress=missingIncludeSystem \
+            --suppress=missingInclude \
             --suppress=unusedFunction \
+            --suppress=unmatchedSuppression \
+            --suppress=normalCheckLevelMaxBranches \
             -I include \
             src/ include/
+
+      - name: Setup vcpkg and install dependencies
+        env:
+          VCPKG_ROOT: /usr/local/share/vcpkg
+        run: |
+          $VCPKG_ROOT/vcpkg integrate install
+          $VCPKG_ROOT/vcpkg install
+
+      - name: Configure CMake with compilation database
+        env:
+          VCPKG_ROOT: /usr/local/share/vcpkg
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Check Linting with clang-tidy
+        run: |
+          if [ -f build/compile_commands.json ]; then
+            clang-tidy -p=build src/**/*.cpp
+          else
+            echo "Warning: compile_commands.json not found, skipping clang-tidy"
+          fi
 
   build:
     name: Build Project
@@ -53,20 +80,11 @@ jobs:
           $VCPKG_ROOT/vcpkg integrate install
           $VCPKG_ROOT/vcpkg install
 
-      - name: Configure CMake with compilation database
+      - name: Configure CMake
         run: |
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
             -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
-
-      - name: Check Linting with clang-tidy
-        run: |
-          if [ -f build/compile_commands.json ]; then
-            clang-tidy -p=build src/**/*.cpp
-          else
-            echo "Warning: compile_commands.json not found, skipping clang-tidy"
-          fi
 
       - name: Build Project
         run: cmake --build build --config Release

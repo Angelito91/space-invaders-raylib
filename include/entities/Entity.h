@@ -64,35 +64,35 @@ class Entity {
      * @brief Returns the collision rectangle derived from position and size
      * @return Rectangle used for collision detection
      */
-    Rectangle getRect() const {
+    [[nodiscard]] Rectangle getRect() const {
         return {position.x, position.y, width, height};
     }
 
-    Vector2 getPosition() const {
+    [[nodiscard]] Vector2 getPosition() const {
         return position;
     }
     void setPosition(Vector2 pos) {
         position = pos;
     }
-    Vector2 getVelocity() const {
+    [[nodiscard]] Vector2 getVelocity() const {
         return velocity;
     }
     void setVelocity(Vector2 vel) {
         velocity = vel;
     }
-    bool isActive() const {
+    [[nodiscard]] bool isActive() const {
         return active;
     }
     void setActive(bool act) {
         active = act;
     }
-    float getWidth() const {
+    [[nodiscard]] float getWidth() const {
         return width;
     }
-    float getHeight() const {
+    [[nodiscard]] float getHeight() const {
         return height;
     }
-    Color getColor() const {
+    [[nodiscard]] Color getColor() const {
         return color;
     }
 
