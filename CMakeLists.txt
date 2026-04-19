@@ -4,6 +4,11 @@ project(space-invaders VERSION 0.1 LANGUAGES CXX)
 # Use C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+# Export compile commands for clang-tidy and other tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Allow out-of-tree builds
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)

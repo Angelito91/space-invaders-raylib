@@ -2,20 +2,33 @@
 #include "raylib.h"
 
 /**
- * @brief Abstract base class for all game entities 
+ * @brief Abstract base class for all game entities
  */
 class Entity {
-protected:
-    Vector2 position = {};      ///< Position in the world
-    Vector2 velocity = {};      ///< Movement speed and direction
-    Texture2D texture = {};     ///< Entity sprite
-    bool active = false;        ///< Whether the entity is active
+   protected:
+    Vector2   position = {};     ///< Position in the world
+    Vector2   velocity = {};     ///< Movement speed and direction
+    Texture2D texture  = {};     ///< Entity sprite
+    bool      active   = false;  ///< Whether the entity is active
+    float     width    = 0.0F;   ///< Width of the entity
+    float     height   = 0.0F;   ///< Height of the entity
+    Color     color    = WHITE;  ///< Color of the entity
 
-public:
+   public:
     /**
      * @brief Default constructor
      */
-    Entity() = default;
+    Entity();
+
+    /**
+     * @brief Constructor with initial values
+     * @param pos Initial position
+     * @param vel Initial velocity
+     * @param col Color
+     * @param entityWidth Width
+     * @param entityHeight Height
+     */
+    Entity(Vector2 pos, Vector2 vel, Color col, float entityWidth, float entityHeight);
 
     /**
      * @brief Copy constructor
@@ -38,7 +51,7 @@ public:
     Entity& operator=(Entity&&) = default;
 
     /**
-     * @brief Updates the entity logic every frame 
+     * @brief Updates the entity logic every frame
      */
     virtual void update() = 0;
 
@@ -48,11 +61,39 @@ public:
     virtual void draw() = 0;
 
     /**
-     * @brief Returns the collision rectangle derived from position and texture size 
+     * @brief Returns the collision rectangle derived from position and size
      * @return Rectangle used for collision detection
      */
-    Rectangle getRect() {
-        return {position.x, position.y, (float)texture.width, (float)texture.height};
+    [[nodiscard]] Rectangle getRect() const {
+        return {position.x, position.y, width, height};
+    }
+
+    [[nodiscard]] Vector2 getPosition() const {
+        return position;
+    }
+    void setPosition(Vector2 pos) {
+        position = pos;
+    }
+    [[nodiscard]] Vector2 getVelocity() const {
+        return velocity;
+    }
+    void setVelocity(Vector2 vel) {
+        velocity = vel;
+    }
+    [[nodiscard]] bool isActive() const {
+        return active;
+    }
+    void setActive(bool act) {
+        active = act;
+    }
+    [[nodiscard]] float getWidth() const {
+        return width;
+    }
+    [[nodiscard]] float getHeight() const {
+        return height;
+    }
+    [[nodiscard]] Color getColor() const {
+        return color;
     }
 
     virtual ~Entity() = default;
